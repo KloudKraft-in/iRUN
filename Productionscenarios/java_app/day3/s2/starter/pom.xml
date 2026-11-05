@@ -1,0 +1,27 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.2.3</version>
+  </parent>
+  <groupId>com.example</groupId>
+  <artifactId>retail-service</artifactId>
+  <version>1.0.0</version>
+  <!-- TODO: 1. Set packaging to war -->
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+      <!-- TODO: 2. Exclude log4j-to-slf4j (group org.apache.logging.log4j) to prevent collision with WildFly / JBoss loggers -->
+    </dependency>
+    <!-- TODO: 3. Set embedded tomcat (spring-boot-starter-tomcat) to provided scope so servlet container classes are not bundled -->
+  </dependencies>
+
+  <build>
+    <!-- PROVIDED: keeps the artifact name as target/retail-service.war (used by the deploy command and URL in the guide) -->
+    <finalName>retail-service</finalName>
+  </build>
+</project>

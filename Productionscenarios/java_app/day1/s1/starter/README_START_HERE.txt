@@ -1,13 +1,23 @@
 JAVA-D1-101: Monolith to Two REST Microservices
-====================================================
+===============================================================================
 EXPECTED FAILURE ON STARTUP / INITIAL TEST:
-When you start the Order Service and attempt to create an order:
-  POST http://localhost:8081/api/orders?productId=1&quantity=2
-You will receive:
-  500 Internal Server Error / ResourceAccessException (Connection refused to localhost:8082)
-Because the independent Product Service on port 8082 has not yet been implemented or started!
+1. In Terminal 1, navigate to order-service and run:
+     mvn spring-boot:run
+   (Order Service starts on port 8081).
+2. In Terminal 2, attempt to create an order:
+     curl.exe -X POST "http://localhost:8081/api/orders?productId=1&quantity=2"
+3. OBSERVED FAILURE:
+     500 Internal Server Error / ResourceAccessException (Connection refused to localhost:8082)
+   Why this fails: The monolithic order application has been decoupled, but the dependent
+   product-service on port 8082 has not yet been started!
 
 YOUR MISSION (Guidelines & Solve):
-1. Build and launch the independent Product Service on port 8082 with endpoint /api/products/{id}.
-2. Configure Order Service to consume Product Service via RestTemplate.
-3. Verify successful order creation with product details populated.
+1. Navigate to product-service in a separate terminal:
+     cd starter/product-service
+2. Review ProductController.java and ensure the @GetMapping("/{id}") endpoint is active.
+3. Start product-service:
+     mvn spring-boot:run
+   (Product Service runs on port 8082).
+4. Run validation:
+     .\validation_script.ps1 (Windows) or ./validation_script.sh (Ubuntu)
+===============================================================================

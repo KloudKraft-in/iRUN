@@ -1,14 +1,13 @@
-JAVA-D3-101: Spring Cloud Centralized Config Server & @RefreshScope
-======================================================================
-EXPECTED FAILURE ON STARTUP / INITIAL TEST:
-1. Missing @EnableConfigServer:
-   Config Server starts as a blank Spring Boot app; requests to http://localhost:8888/retail-service/dev return 404.
-2. Missing @RefreshScope on Retail Client:
-   When store.discount is updated in Git repository from 10 to 20, calling POST /actuator/refresh
-   either fails or has NO EFFECT on GET /discount (still returns 10 instead of 20)!
-
-YOUR MISSION (Guidelines & Solve):
-1. Annotate ConfigServerApplication with @EnableConfigServer on port 8888 backed by Git repo.
-2. Configure symmetrical encryption/decryption (encrypt.key).
-3. Annotate DiscountController with @RefreshScope and expose /actuator/refresh.
-4. Update property in Git repository and trigger live refresh without restarting the client app.
+========================================================================
+LAB: JAVA-D3-101 - Spring Cloud Centralized Config & @RefreshScope
+========================================================================
+TASK SUMMARY:
+1. Expected Failure:
+   - Config Server fails to serve configurations if @EnableConfigServer is missing.
+   - Retail Client values do not update dynamically when git repo changes without @RefreshScope.
+2. Resolution:
+   - Configure @EnableConfigServer on ConfigServerApplication.
+   - Add @RefreshScope on DiscountController in retail-client.
+   - Trigger POST http://localhost:8083/actuator/refresh to reload properties without restart.
+   - Run validation_script.ps1 / .sh to verify PASS.
+========================================================================

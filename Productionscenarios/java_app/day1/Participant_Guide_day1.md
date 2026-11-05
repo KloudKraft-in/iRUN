@@ -1,10 +1,10 @@
-# Java Application Operations \- Participant Lab Guide
+# Java Application Operations - Participant Lab Guide
 
 ## Hands-On Production Scenarios, Troubleshooting & Resolution Guidelines
 
 ---
 
-## 1\. Module-Wise Setup Requirements
+## 1. Module-Wise Setup Requirements
 
 All lab scenarios are designed to run natively on your training VM or local workstation. Ensure the following tools and prerequisites are in place before starting.
 
@@ -39,7 +39,7 @@ Ensure the following ports are unoccupied before launching exercises:
 
 ---
 
-## 2\. Common Instructions for Trainers and Participants
+## 2. Common Instructions for Trainers and Participants
 
 ### Standard Lab Workflow
 
@@ -56,7 +56,7 @@ Every scenario in this training follows a rigorous **Simulation & Troubleshootin
 1. **Artifact Distribution & Setup**:  
    - Download the scenario bundle (`Day-X_Artifacts.zip` or clone from repository).  
    - Extract the files into your designated workspace (e.g., `~/day1`, `~/day2`, `~/day3` or `C:\day1`, `C:\day2`, `C:\day3`).  
-   - Launch **Visual Studio Code** and select **File \-\> Open Folder...** pointing to the scenario root.  
+   - Launch **Visual Studio Code** and select **File -\> Open Folder...** pointing to the scenario root.  
 2. **Execute Initial Validation Script / Start Application**:  
    - In the VS Code integrated terminal (```Ctrl + \``), execute the scenario validation script (```./validation\_script.sh`on Linux or`.\\validation\_script.ps1\` on Windows).  
    - Alternatively, attempt to launch the application with `mvn spring-boot:run`.  
@@ -75,17 +75,22 @@ Every scenario in this training follows a rigorous **Simulation & Troubleshootin
 
 ---
 
-## 3\. Day 1: Enterprise Architecture & Spring Boot Fundamentals
+## 3. Day 1: Enterprise Architecture & Spring Boot Fundamentals
 
 ### Scenario JAVA-D1-101: Monolith to Two REST Microservices
 
 - **Ticket ID:** `JAVA-D1-101` \| **Category:** Architecture \| **Suggested Time:** 75 mins  
 - **Starter Artifacts Location:** `Artifacts_Sorted/Day-1/Scenario-1_JAVA-D1-101_Monolith_to_Microservices/starter`  
-- Template Location:&nbsp;
 
 #### Setup: Fetch template details
 
-- Execute `git clone https://github.com/KloudKraft-in/iRUN/tree/main/Productionscenarios/java_app/day1/s1`  to fetch boilerplate code
+- Execute
+
+```sh
+git clone https://github.com/KloudKraft-in/iRUN.git
+```
+
+- `https://github.com/KloudKraft-in/iRUN/tree/main/Productionscenarios/java_app/day1/s1` to fetch boilerplate code
 
 #### A. Expected Failure (Reproduction Steps)
 
@@ -112,8 +117,10 @@ Connection refused: connect
 
 #### B. Step-by-Step Investigation Guidelines
 
-- Inspect `order-service/src/main/resources/application.properties` and note the `product.service.url` configuration.  
-- Check which network ports are currently open using `netstat -tuln | grep 8082` or `Get-NetTCPConnection -LocalPort 8082`.  
+- Inspect `order-service/src/main/resources/application.properties` and note the `product.service.url` configuration.
+- Check which network ports are currently open using below :
+  - `Get-NetTCPConnection -LocalPort 8081 -State Listen -ErrorAction SilentlyContinue;`
+  - `netstat -ano | findstr ":8081 :8082"`
 - Review the REST contract required by `order-service`: it expects a JSON payload from `GET /api/products/{id}` with fields `{ "id": 1, "name": "...", "price": ... }`.
 
 #### C. Action Items to Solve
@@ -132,9 +139,18 @@ Connection refused: connect
 - **Ticket ID:** `JAVA-D1-102` \| **Category:** Deployment Architecture \| **Suggested Time:** 50 mins  
 - **Starter Artifacts Location:** `Artifacts_Sorted/Day-1/Scenario-2_JAVA-D1-102_JAR_WAR_Tomcat_Deployment/starter`
 
+
+
+
 #### Setup: Fetch template details
 
-- Execute `git clone https://github.com/KloudKraft-in/iRUN/tree/main/Productionscenarios/java_app/day1/s2`  to fetch boilerplate code
+- Execute
+
+```sh
+git clone https://github.com/KloudKraft-in/iRUN.git
+```
+
+- `https://github.com/KloudKraft-in/iRUN/tree/main/Productionscenarios/java_app/day1/s2` to fetch boilerplate code
 
 #### A. Expected Failure (Reproduction Steps)
 
@@ -158,8 +174,11 @@ Action: Identify and stop the process that's listening on port 8080 or configure
 
 #### B. Step-by-Step Investigation Guidelines
 
-- Check which process is occupying port 8080 using `lsof -i :8080` (Linux) or `netstat -ano | findstr 8080` (Windows).  
-- Inspect Tomcat log files in `CATALINA_HOME/logs/catalina.out` and `localhost.<date>.log`.  
+- Inspect `jar-demo/src/main/resources/application.properties` and note the `server.port` configuration.
+- Check which network ports are currently open using below :
+  - `Get-NetTCPConnection -LocalPort 8080 -State Listen -ErrorAction SilentlyContinue;`
+  - `netstat -ano | findstr ":8080 :8083"`
+- Inspect Tomcat log files in `CATALINA_HOME/logs/catalina.out` and `localhost.<date>.log`.
 - Review standard Jakarta EE servlet requirements for external containers: external containers require a servlet initialization hook to bootstrap Spring without `public static void main()`.
 
 #### C. Action Items to Solve
@@ -179,9 +198,18 @@ Action: Identify and stop the process that's listening on port 8080 or configure
 - **Ticket ID:** `JAVA-D1-103` \| **Category:** Build & Dependency Management \| **Suggested Time:** 45 mins  
 - **Starter Artifacts Location:** `Artifacts_Sorted/Day-1/Scenario-3_JAVA-D1-103_Maven_Gradle_Dependency_Management/starter`
 
+
+
+
 #### Setup: Fetch template details
 
-- Execute `git clone https://github.com/KloudKraft-in/iRUN/tree/main/Productionscenarios/java_app/day1/s3`  to fetch boilerplate code
+- Execute
+
+```sh
+git clone https://github.com/KloudKraft-in/iRUN.git
+```
+
+- `https://github.com/KloudKraft-in/iRUN/tree/main/Productionscenarios/java_app/day1/s3` to fetch boilerplate code
 
 #### A. Expected Failure (Reproduction Steps)
 
@@ -191,8 +219,11 @@ Action: Identify and stop the process that's listening on port 8080 or configure
 
 #### B. Step-by-Step Investigation Guidelines
 
-- Run `mvn dependency:tree` to produce a complete hierarchy of compile, runtime, and test dependencies.  
-- Look for mismatched parent POM versions and unpinned dependencies.  
+- Run `mvn dependency:tree` to produce a complete hierarchy of compile, runtime, and test dependencies.
+- Look for mismatched parent POM versions and unpinned dependencies.
+- Check which network ports are currently open using below :
+  - `Get-NetTCPConnection -LocalPort 8081 -State Listen -ErrorAction SilentlyContinue;`
+  - `netstat -ano | findstr ":8081"`
 - Compare the declarative XML lifecycle of Maven (`validate`, `compile`, `test`, `package`, `verify`, `install`) with Gradle's task-based DAG execution model (`build.gradle`).
 
 #### C. Action Items to Solve

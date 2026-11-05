@@ -1,0 +1,48 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.3</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.labskraft</groupId>
+    <artifactId>war-demo</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <!-- TODO 1 for Participant: Package this project as a WAR instead of the default JAR
+         (add the <packaging> element with the value "war" here). -->
+
+    <properties>
+        <java.version>17</java.version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- TODO 2 for Participant: Add the spring-boot-starter-tomcat dependency with
+             <scope>provided</scope> so the embedded Tomcat classes are NOT packaged inside the WAR
+             (the external Tomcat supplies them). -->
+
+    </dependencies>
+
+    <build>
+        <finalName>war-demo</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

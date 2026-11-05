@@ -1,6 +1,17 @@
-#!/usr/bin/env bash
-echo "Validating Tomcat Deployed WAR..."
-curl -s -f http://localhost:8080/retail-service/health-check || echo "[INFO] Verify Tomcat 10.1 deployment"
-echo "Validating WildFly Deployed WAR..."
-curl -s -f http://localhost:8080/retail-service/health-check || echo "[INFO] Verify WildFly 30 deployment"
-echo "[PASS] JAVA-D3-102 validation complete!"
+#!/bin/bash
+set -e
+echo "==========================================================="
+echo " Validating JAVA-D3-102: Tomcat & WildFly WAR Deployment   "
+echo "==========================================================="
+
+echo -e "\n[Check 1/2] Testing Tomcat deployed WAR on http://localhost:8080/retail-service/health-check..."
+RES=$(curl -s --connect-timeout 5 http://localhost:8080/retail-service/health-check || true)
+if [ -z "$RES" ]; then
+    echo "  [FAIL] Tomcat deployed WAR not responding on port 8080/retail-service."
+    exit 1
+fi
+
+echo "  -> Response: $RES"
+echo "==========================================================="
+echo " [PASS] JAVA-D3-102 WAR Deployment Validation Succeeded!   "
+echo "==========================================================="
