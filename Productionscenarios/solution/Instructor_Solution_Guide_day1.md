@@ -1,12 +1,12 @@
-# Java Application Operations \- Master Instructor Solution Guide
+# Java Application Operations - Master Instructor Solution Guide
 
 ## Trainer Instructions, Step-by-Step Solutions & Visual Verification Mockups
 
-> \[\!IMPORTANT\] **CONFIDENTIAL \- FOR TRAINER & INSTRUCTOR USE ONLY** Do not distribute this guide to participants. Use this document to guide simulations, facilitate troubleshooting, and validate participant submissions against expected reference implementations.
+> > [!IMPORTANT] **CONFIDENTIAL - FOR TRAINER & INSTRUCTOR USE ONLY** Do not distribute this guide to participants. Use this document to guide simulations, facilitate troubleshooting, and validate participant submissions against expected reference implementations.
 
 ---
 
-## 1\. Module-Wise Setup Requirements (Trainer VM & Lab Fleet)
+## 1. Module-Wise Setup Requirements (Trainer VM & Lab Fleet)
 
 ### Training Fleet Readiness Checklist
 
@@ -24,7 +24,7 @@
 
 ---
 
-## 2\. Common Trainer Instructions & Pedagogy
+## 2. Common Trainer Instructions & Pedagogy
 
 ### The Simulation Methodology
 
@@ -38,17 +38,22 @@
 
 ---
 
-## 3\. Day 1: Enterprise Architecture & Spring Boot Fundamentals
+## 3. Day 1: Enterprise Architecture & Spring Boot Fundamentals
 
 ### Scenario JAVA-D1-101: Monolith to Two REST Microservices
 
 - **Ticket ID:** `JAVA-D1-101` \| **Category:** Architecture \| **Time:** 75 mins  
 - **Starter Artifacts Location:** `Artifacts_Sorted/Day-1/Scenario-1_JAVA-D1-101_Monolith_to_Microservices/starter`  
-- Template Location:&nbsp;
 
 #### Setup: Fetch template details
 
-- Execute `git clone https://github.com/KloudKraft-in/iRUN/tree/main/Productionscenarios/java_app/day1/s1`  to fetch boilerplate code
+- Execute
+
+```sh
+git clone https://github.com/KloudKraft-in/iRUN.git
+```
+
+- `https://github.com/KloudKraft-in/iRUN/tree/main/Productionscenarios/java_app/day1/s1` to fetch boilerplate code
 
 #### Step 0: Expected Failure (Reproduction Steps)
 
@@ -94,7 +99,7 @@ org.springframework.web.client.ResourceAccessException: I/O error on GET request
 
 #### B. Full Solution Code & Configuration
 
-**1\. Product Service \- Model (`Product.java`):**
+**1. Product Service - Model (`Product.java`):**
 
 ```java
 package com.labskraft.product.model;
@@ -102,7 +107,7 @@ package com.labskraft.product.model;
 public record Product(Long id, String name, Double price) {}
 ```
 
-**2\. Product Service \- Controller (`ProductController.java`):**
+**2. Product Service - Controller (`ProductController.java`):**
 
 ```java
 package com.labskraft.product.controller;
@@ -133,7 +138,7 @@ public class ProductController {
 }
 ```
 
-**3\. Product Service Configuration (`product-service/src/main/resources/application.properties`):**
+**3. Product Service Configuration (`product-service/src/main/resources/application.properties`):**
 
 ```properties
 server.port=8082
@@ -142,7 +147,7 @@ spring.application.name=product-service
 
 &nbsp;
 
-**4\. Order Service \- Controller (`OrderController.java`):**
+**4. Order Service - Controller (`OrderController.java`):**
 
 ```java
 package com.labskraft.order.controller;
@@ -202,9 +207,16 @@ $ curl -s -X POST "http://localhost:8081/api/orders?productId=1&quantity=2"
 - **Ticket ID:** `JAVA-D1-102` \| **Category:** Deployment Architecture \| **Time:** 50 mins  
 - **Starter Artifacts Location:** `Artifacts_Sorted/Day-1/Scenario-2_JAVA-D1-102_JAR_WAR_Tomcat_Deployment/starter`
 
+
 #### Setup: Fetch template details
 
-- Execute `git clone https://github.com/KloudKraft-in/iRUN/tree/main/Productionscenarios/java_app/day1/s2`  to fetch boilerplate code
+- Execute
+
+```sh
+git clone https://github.com/KloudKraft-in/iRUN.git
+```
+
+- `https://github.com/KloudKraft-in/iRUN/tree/main/Productionscenarios/java_app/day1/s2` to fetch boilerplate code
 
 #### Step 0: Expected Failure (Reproduction Steps)
 
@@ -254,7 +266,7 @@ Content-Type: text/html;charset=utf-8
 
 B. Full Solution Code & Configuration
 
-**1\. Executable JAR Configuration (`jar-demo/src/main/resources/application.properties`):**
+**1. Executable JAR Configuration (`jar-demo/src/main/resources/application.properties`):**
 
 ```properties
 server.port=8083
@@ -263,7 +275,7 @@ spring.application.name=jar-demo
 
 &nbsp;
 
-**2\. WAR Application Class (`WarDemoApplication.java`):**
+**2. WAR Application Class (`WarDemoApplication.java`):**
 
 ```java
 package com.labskraft.demo;
@@ -295,7 +307,7 @@ public class WarDemoApplication extends SpringBootServletInitializer {
 }
 ```
 
-**3\. WAR Build Configuration (`war-demo/pom.xml`):**
+**3. WAR Build Configuration (`war-demo/pom.xml`):**
 
 ```xml
 <packaging>war</packaging>
@@ -334,7 +346,158 @@ Tomcat 10.1 Deployed WAR Success!
 
 ## 
 
-## 6\. Evaluation & Scoring Rubric
+### Scenario JAVA-D1-103: Maven, Gradle and Dependency Management
+
+- **Ticket ID:** `JAVA-D1-103` | **Category:** Build & Dependency Management | **Time:** 45 mins
+- **Solution Artifacts Location:** `Artefacts/Scenario-3_JAVA-D1-103_Maven_Gradle_Dependency_Management.zip`
+
+
+#### Setup: Fetch template details
+
+- Execute
+
+```sh
+git clone https://github.com/KloudKraft-in/iRUN.git
+```
+
+- `https://github.com/KloudKraft-in/iRUN/tree/main/Productionscenarios/java_app/day1/s3` to fetch boilerplate code
+
+#### A. Expected Failure Screenshot Mockup
+- **Failure Classification:** `Fail >> expected` (Build Failure & Incompatible API)
+
+```text
++----------------------------------------------------------------------------------------------------+
+| TERMINAL - [BUILD FAILURE: DEPENDENCY DRIFT & INCOMPATIBLE APIs]                                    |
++----------------------------------------------------------------------------------------------------+
+$ mvn clean package
+[INFO] Scanning for projects...
+[INFO] --------------------< com.labskraft:order-service >--------------------
+[INFO] Building order-service 0.0.1-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile
+[ERROR] /order-service/src/main/java/com/labskraft/order/controller/OrderController.java:[15,28]
+package org.springframework.web.bind.annotation does not exist
+[ERROR] Incompatible dependency version detected: Spring Framework 5.3.x collided with Jakarta EE 10 servlet spec.
+[INFO] BUILD FAILURE
++----------------------------------------------------------------------------------------------------+
+```
+
+#### B. Steps to Solve the Problem (With Complete Solutions)
+
+**1. Standardized Parent POM (`pom.xml`):**
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.3</version>
+        <relativePath/>
+    </parent>
+    <groupId>com.labskraft</groupId>
+    <artifactId>order-service</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <properties>
+        <java.version>17</java.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+```
+
+**2. Equivalent Gradle Build Configuration (`build.gradle`):**
+```groovy
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.3'
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.labskraft'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+```
+
+**3. Dependency Tree Inspection & Build Commands:**
+```bash
+# Generate Maven dependency tree to detect transitive conflicts:
+./mvnw dependency:tree
+
+# Build the standardized fat JAR:
+./mvnw clean package -DskipTests
+```
+
+#### C. Visual Verification Mockup
+
+```text
++----------------------------------------------------------------------------------------------------+
+| TERMINAL - [REPRODUCIBLE BUILD SUCCESS & DEPENDENCY TREE OUTPUT]                                  |
++----------------------------------------------------------------------------------------------------+
+$ ./validation_script.sh
+Running Maven Clean Test Package...
+[INFO] Scanning for projects...
+[INFO] Building order-service 0.0.1-SNAPSHOT
+[INFO] --- maven-compiler-plugin:3.11.0:compile (default-compile) @ order-service ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files with javac [debug target 17] to target/classes
+[INFO] --- spring-boot-maven-plugin:3.2.3:repackage (repackage) @ order-service ---
+[INFO] Replacing main artifact [target/order-service-0.0.1-SNAPSHOT.jar] with repackaged fat jar
+[INFO] BUILD SUCCESS
+[INFO] Total time:  3.421 s
+
+Validating executable JAR artifact generation:
+-rw-r--r-- 1 student student 19M target/order-service-0.0.1-SNAPSHOT.jar
+[SUCCESS] Maven reproducible build verified successfully!
++----------------------------------------------------------------------------------------------------+
+```
+
+#### D. Trainer Evaluation Notes & Scoring Rubric
+- **Socratic Coaching:** Ask student: *"Why does removing explicit `<version>` tags from `<dependency>` entries prevent dependency collisions when using `spring-boot-starter-parent`?"*
+- **Scoring Rubric (100 Points Total):**
+  - **30 Pts - Parent POM Locking:** Correct inheritance from `spring-boot-starter-parent:3.2.3`.
+  - **35 Pts - Dependency Tree Analysis:** Demonstrated `mvn dependency:tree` and documented differences between Maven lifecycles and Gradle DAG.
+  - **35 Pts - Build Validation:** Clean executable JAR generated via `./mvnw clean package`.
+
+---
+
+## 6. Evaluation & Scoring Rubric
 
 | Criteria | Weight | Evaluation Method |
 | :---- | :---: | :---- |
