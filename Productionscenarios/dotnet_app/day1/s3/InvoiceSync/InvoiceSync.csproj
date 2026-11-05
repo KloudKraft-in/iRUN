@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Lets the same binary run as a Windows Service (SCM) or a systemd service; each is a no-op elsewhere. -->
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="10.*" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Systemd" Version="10.*" />
+    <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="10.*" />
+  </ItemGroup>
+
+</Project>

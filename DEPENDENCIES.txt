@@ -1,0 +1,222 @@
+================================================================================
+                    DEPENDENCIES & PREREQUISITES SPECIFICATION
+================================================================================
+
+--------------------------------------------------------------------------------
+0. GLOBAL PREREQUISITES (REQUIRED FOR ALL DAYS)
+--------------------------------------------------------------------------------
+Tool / Software        Required Version    Verify Command
+--------------------------------------------------------------------------------
+Java JDK               17 LTS or 21 LTS    java -version
+Java Compiler (javac)  17 LTS or 21 LTS    javac -version
+Apache Maven           3.9+                mvn -version
+Git CLI                2.30+               git --version
+PowerShell             5.1+ or 7+          $PSVersionTable.PSVersion
+cURL                   7.68+ or 8.x        curl --version
+
+* Simple Download / Install Commands (Run in PowerShell as Administrator):
+  - Java JDK 17:
+      winget install EclipseAdoptium.Temurin.17.JDK
+  - Apache Maven:
+      winget install Apache.Maven
+  - Git CLI:
+      winget install Git.Git
+
+
+--------------------------------------------------------------------------------
+DAY 1: ARCHITECTURE & PACKAGING
+--------------------------------------------------------------------------------
+* Scenarios:
+  - JAVA-D1-101: Monolith to Microservices
+  - JAVA-D1-102: Standalone JAR vs External Tomcat WAR
+  - JAVA-D1-103: Maven Lifecycle & Dependency Management
+
+* External Software:
+  - Apache Tomcat: 10.1.x (Jakarta EE 10)
+
+* Simple Download Command for Tomcat 10.1 (PowerShell):
+  New-Item -ItemType Directory -Path "C:\training_tools" -Force
+  Invoke-WebRequest -Uri "https://archive.apache.org/dist/tomcat/tomcat-10/v10.1.20/bin/apache-tomcat-10.1.20-windows-x64.zip" -OutFile "C:\training_tools\tomcat10.zip"
+  Expand-Archive -Path "C:\training_tools\tomcat10.zip" -DestinationPath "C:\training_tools" -Force
+
+* Key Maven Dependencies (pom.xml):
+  - Spring Boot: 3.2.3
+  - spring-boot-starter-web: 3.2.3
+  - spring-boot-starter-tomcat: 3.2.3 (scope: provided)
+
+* Simple Command to Pre-download Maven Dependencies:
+  cd Productionscenarios\java_app\day1\s1\starter\order-service ; mvn dependency:go-offline
+  cd ..\..\..\s2\starter\jar-demo ; mvn dependency:go-offline
+
+* Required Free Ports:
+  - 8080 : Apache Tomcat 10.1 (war-demo)
+  - 8081 : Order Service
+  - 8082 : Product Service
+  - 8083 : Standalone JAR (jar-demo)
+
+
+--------------------------------------------------------------------------------
+DAY 2: CONFIGURATION & DIAGNOSTICS
+--------------------------------------------------------------------------------
+* Scenarios:
+  - JAVA-D2-101: Spring Profiles & Configuration Binding
+  - JAVA-D2-102: Actuator Endpoints & Security
+  - JAVA-D2-103: HikariCP Connection Pool & Startup Failure
+
+* Diagnostic Tools:
+  - netstat / Get-NetTCPConnection (Port verification)
+
+* Key Maven Dependencies (pom.xml):
+  - Spring Boot: 3.2.3
+  - spring-boot-starter-web: 3.2.3
+  - spring-boot-starter-actuator: 3.2.3
+  - spring-boot-starter-security: 3.2.3
+  - spring-boot-starter-data-jpa: 3.2.3
+  - HikariCP: 5.0.1
+  - H2 Database: 2.2.224
+
+* Simple Command to Pre-download Maven Dependencies:
+  cd Productionscenarios\java_app\day2\s1\starter ; mvn dependency:go-offline
+  cd ..\..\s2\starter ; mvn dependency:go-offline
+  cd ..\..\s3\starter ; mvn dependency:go-offline
+
+* Required Free Ports:
+  - 8081 : Product Service & Actuator
+
+
+--------------------------------------------------------------------------------
+DAY 3: CLOUD CONFIG, ENTERPRISE SERVERS & JVM TUNING
+--------------------------------------------------------------------------------
+* Scenarios:
+  - JAVA-D3-101: Spring Cloud Central Config & Dynamic Refresh
+  - JAVA-D3-102: Tomcat & WildFly WAR Deployment / Logging Conflicts
+  - JAVA-D3-103: JVM Memory Ergonomics, Thread Dumps & Graceful Shutdown
+
+* External Software & Diagnostic Tools:
+  - Apache Tomcat: 10.1.x
+  - WildFly Server: 30.0.1.Final
+  - JDK CLI: jcmd, jstack (PID inspection & thread dumps)
+  - Git: Local configuration repository backend
+
+* Simple Download Command for WildFly 30 (PowerShell):
+  New-Item -ItemType Directory -Path "C:\training_tools" -Force
+  Invoke-WebRequest -Uri "https://github.com/wildfly/wildfly/releases/download/30.0.1.Final/wildfly-30.0.1.Final.zip" -OutFile "C:\training_tools\wildfly30.zip"
+  Expand-Archive -Path "C:\training_tools\wildfly30.zip" -DestinationPath "C:\training_tools" -Force
+
+* Key Maven Dependencies (pom.xml):
+  - Spring Cloud: 2023.0.0
+  - spring-cloud-config-server: 4.1.0
+  - spring-cloud-starter-config: 4.1.0
+  - spring-boot-starter-actuator: 3.2.3
+  - spring-boot-starter-web: 3.2.3 (exclude log4j-to-slf4j for WildFly)
+
+* Simple Command to Pre-download Maven Dependencies:
+  cd Productionscenarios\java_app\day3\s1\starter\config-server ; mvn dependency:go-offline
+  cd ..\retail-client ; mvn dependency:go-offline
+  cd ..\..\s3\starter ; mvn dependency:go-offline
+
+* Required Free Ports:
+  - 8080 : Apache Tomcat 10.1 / Tuned Retail Service
+  - 8083 : Retail Client Application
+  - 8888 : Spring Cloud Config Server
+  - 9990 : WildFly Management Console
+
+
+--------------------------------------------------------------------------------
+SUMMARY: MASTER PORT RESERVATIONS
+--------------------------------------------------------------------------------
+Port    Service                                     Used In
+--------------------------------------------------------------------------------
+8080    Apache Tomcat 10.1 / Tuned Retail Service   Day 1, Day 3
+8081    Order Service / Product Service / Actuator  Day 1, Day 2
+8082    Product Lookup Service                      Day 1
+8083    Standalone JAR / Retail Client              Day 1, Day 3
+8888    Spring Cloud Config Server                  Day 3
+9990    WildFly Management Console                  Day 3
+
+
+================================================================================
+AUTOMATED ALL-IN-ONE SETUP & VALIDATION SCRIPT (POWERSHELL)
+Copy and run this entire script block in PowerShell (Run as Administrator)
+================================================================================
+
+# Save as setup_prerequisites.ps1 and execute:
+$ErrorActionPreference = 'Continue'
+Write-Host "=====================================================" -ForegroundColor Cyan
+Write-Host " iRUN / Production Scenarios Prerequisite Check & Setup " -ForegroundColor Cyan
+Write-Host "=====================================================" -ForegroundColor Cyan
+
+# 1. Check & Install Java JDK
+Write-Host "`n[1/6] Checking Java JDK..." -ForegroundColor Yellow
+if (Get-Command java -ErrorAction SilentlyContinue) {
+    Write-Host "  -> Java is already installed:" -ForegroundColor Green
+    java -version
+} else {
+    Write-Host "  -> Installing Eclipse Temurin JDK 17 via winget..." -ForegroundColor Yellow
+    winget install EclipseAdoptium.Temurin.17.JDK --accept-source-agreements --accept-package-agreements
+}
+
+# 2. Check & Install Apache Maven
+Write-Host "`n[2/6] Checking Apache Maven..." -ForegroundColor Yellow
+if (Get-Command mvn -ErrorAction SilentlyContinue) {
+    Write-Host "  -> Maven is already installed:" -ForegroundColor Green
+    mvn -version
+} else {
+    Write-Host "  -> Installing Apache Maven via winget..." -ForegroundColor Yellow
+    winget install Apache.Maven --accept-source-agreements --accept-package-agreements
+}
+
+# 3. Check & Install Git
+Write-Host "`n[3/6] Checking Git..." -ForegroundColor Yellow
+if (Get-Command git -ErrorAction SilentlyContinue) {
+    Write-Host "  -> Git is already installed:" -ForegroundColor Green
+    git --version
+} else {
+    Write-Host "  -> Installing Git via winget..." -ForegroundColor Yellow
+    winget install Git.Git --accept-source-agreements --accept-package-agreements
+}
+
+# 4. Download & Extract Apache Tomcat 10.1
+Write-Host "`n[4/6] Checking Apache Tomcat 10.1..." -ForegroundColor Yellow
+$tomcatPath = "C:\training_tools\apache-tomcat-10.1.20"
+if (Test-Path $tomcatPath) {
+    Write-Host "  -> Apache Tomcat 10.1 already exists at $tomcatPath" -ForegroundColor Green
+} else {
+    Write-Host "  -> Downloading Tomcat 10.1 to C:\training_tools..." -ForegroundColor Yellow
+    New-Item -ItemType Directory -Path "C:\training_tools" -Force | Out-Null
+    Invoke-WebRequest -Uri "https://archive.apache.org/dist/tomcat/tomcat-10/v10.1.20/bin/apache-tomcat-10.1.20-windows-x64.zip" -OutFile "C:\training_tools\tomcat10.zip"
+    Expand-Archive -Path "C:\training_tools\tomcat10.zip" -DestinationPath "C:\training_tools" -Force
+    Remove-Item "C:\training_tools\tomcat10.zip" -Force
+    Write-Host "  -> Tomcat 10.1 extracted to C:\training_tools" -ForegroundColor Green
+}
+
+# 5. Download & Extract WildFly 30
+Write-Host "`n[5/6] Checking WildFly 30.0.1.Final..." -ForegroundColor Yellow
+$wildflyPath = "C:\training_tools\wildfly-30.0.1.Final"
+if (Test-Path $wildflyPath) {
+    Write-Host "  -> WildFly 30 already exists at $wildflyPath" -ForegroundColor Green
+} else {
+    Write-Host "  -> Downloading WildFly 30 to C:\training_tools..." -ForegroundColor Yellow
+    New-Item -ItemType Directory -Path "C:\training_tools" -Force | Out-Null
+    Invoke-WebRequest -Uri "https://github.com/wildfly/wildfly/releases/download/30.0.1.Final/wildfly-30.0.1.Final.zip" -OutFile "C:\training_tools\wildfly30.zip"
+    Expand-Archive -Path "C:\training_tools\wildfly30.zip" -DestinationPath "C:\training_tools" -Force
+    Remove-Item "C:\training_tools\wildfly30.zip" -Force
+    Write-Host "  -> WildFly 30 extracted to C:\training_tools" -ForegroundColor Green
+}
+
+# 6. Verify Port Availability
+Write-Host "`n[6/6] Checking Required Ports (8080, 8081, 8082, 8083, 8888, 9990)..." -ForegroundColor Yellow
+$ports = @(8080, 8081, 8082, 8083, 8888, 9990)
+$occupied = Get-NetTCPConnection -LocalPort $ports -State Listen -ErrorAction SilentlyContinue
+if ($occupied) {
+    Write-Host "  [WARNING] The following ports are already in use:" -ForegroundColor Red
+    $occupied | Select-Object LocalPort, OwningProcess | Format-Table -AutoSize
+    Write-Host "  Please terminate processes on these ports before starting exercises." -ForegroundColor Red
+} else {
+    Write-Host "  -> All required ports (8080, 8081, 8082, 8083, 8888, 9990) are completely FREE!" -ForegroundColor Green
+}
+
+Write-Host "`n=====================================================" -ForegroundColor Green
+Write-Host " Prerequisites setup check completed! " -ForegroundColor Green
+Write-Host " Restart your PowerShell terminal if you installed new tools via winget." -ForegroundColor Green
+Write-Host "=====================================================" -ForegroundColor Green
