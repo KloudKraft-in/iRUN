@@ -1,0 +1,7 @@
+{
+  "name": "checkout-service",
+  "url": "http://127.0.0.1:8085",
+  "connect_timeout": 3000,
+  "write_timeout": 3000,
+  "read_timeout": 3000
+}
