@@ -1,0 +1,13 @@
+_format_version: "3.0"
+_transform: true
+
+services:
+  - name: inventory-service
+    url: http://127.0.0.1:8081
+    routes:
+      - name: inventory-route
+        # BUG: Route is /v1/inventory but partner calls /api/v1/inventory
+        paths:
+          - /v1/inventory
+        strip_path: false
+# NOTE: Missing key-auth plugin and rate-limiting plugin

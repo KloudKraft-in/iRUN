@@ -1,0 +1,30 @@
+28-Oct-2026 09:00:15.112 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/10.1.18
+28-Oct-2026 09:00:15.115 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Feb 2 2026 14:20:10 UTC
+28-Oct-2026 09:00:15.116 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Linux
+28-Oct-2026 09:00:15.117 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             /usr/lib/jvm/java-17-openjdk-amd64
+28-Oct-2026 09:00:15.204 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8082"]
+28-Oct-2026 09:00:15.220 SEVERE [main] org.apache.catalina.util.LifecycleBase.handleSubClassException Failed to initialize component [Connector[HTTP/1.1-8082]]
+ org.apache.catalina.LifecycleException: Protocol handler initialization failed
+	at org.apache.catalina.connector.Connector.initInternal(Connector.java:1049)
+	at org.apache.catalina.util.LifecycleBase.init(LifecycleBase.java:127)
+	at org.apache.catalina.core.StandardService.initInternal(StandardService.java:536)
+	at org.apache.catalina.util.LifecycleBase.init(LifecycleBase.java:127)
+	at org.apache.catalina.core.StandardServer.initInternal(StandardServer.java:838)
+	at org.apache.catalina.util.LifecycleBase.init(LifecycleBase.java:127)
+	at org.apache.catalina.startup.Catalina.load(Catalina.java:724)
+	at org.apache.catalina.startup.Catalina.load(Catalina.java:766)
+ Caused by: java.net.BindException: Address already in use: 8082
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:555)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.netBind(ServerSocketChannelImpl.java:337)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:294)
+	at org.apache.tomcat.util.net.NioEndpoint.initServerSocket(NioEndpoint.java:229)
+	at org.apache.tomcat.util.net.NioEndpoint.bind(NioEndpoint.java:204)
+	at org.apache.tomcat.util.net.AbstractEndpoint.bindWithCleanup(AbstractEndpoint.java:1227)
+	at org.apache.tomcat.util.net.AbstractEndpoint.init(AbstractEndpoint.java:1240)
+	at org.apache.coyote.AbstractProtocol.init(AbstractProtocol.java:604)
+	at org.apache.coyote.http11.AbstractHttp11Protocol.init(AbstractHttp11Protocol.java:75)
+	at org.apache.catalina.connector.Connector.initInternal(Connector.java:1046)
+28-Oct-2026 09:00:15.225 SEVERE [main] org.apache.catalina.startup.Catalina.load Catalina.start:
+ org.apache.catalina.LifecycleException: A sub-element failed to initialize
+28-Oct-2026 09:00:15.230 INFO [main] org.apache.catalina.startup.Catalina.load [server.xml] process destroyed

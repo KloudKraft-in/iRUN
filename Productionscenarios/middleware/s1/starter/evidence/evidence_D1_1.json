@@ -1,0 +1,19 @@
+{
+  "ticket": "MIA-D1-101",
+  "participant": "<<FILL_YOUR_NAME>>",
+  "startupLogLine": "<<FILL_EXACT_EXCEPTION_LINE_FROM_CATALINA_OUT>>",
+  "catalogHealthResponse": {
+    "statusCode": "<<FILL_HTTP_STATUS>>",
+    "bodySnippet": "<<FILL_SNIPPET>>"
+  },
+  "conflictingDaemon": {
+    "portOccupied": "<<FILL_PORT>>",
+    "daemonName": "<<FILL_DAEMON_NAME>>",
+    "stillRunning": "<<FILL_TRUE_OR_FALSE>>"
+  },
+  "remediation": {
+    "backupFileCreated": "<<FILL_TRUE_OR_FALSE>>",
+    "configuredPort": "<<FILL_PORT_SET_IN_SERVER_XML>>",
+    "rootCauseSummary": "<<FILL_BRIEF_SUMMARY>>"
+  }
+}
