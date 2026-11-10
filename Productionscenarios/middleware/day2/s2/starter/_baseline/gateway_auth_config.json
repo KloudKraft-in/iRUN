@@ -1,0 +1,4 @@
+{
+  "allowed_audiences": ["mobile-app-v2"],
+  "clock_skew": 0
+}

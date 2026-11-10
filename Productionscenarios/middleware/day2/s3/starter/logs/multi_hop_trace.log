@@ -1,0 +1,9 @@
+# Multi-Tier Correlated Access Logs for Request ID: req-check-99412
+# Hop 1: Kong API Gateway (/var/log/kong/proxy_access.log)
+[28/Oct/2026:14:30:00.000 +0000] "POST /api/v1/checkout HTTP/1.1" 504 3.001 req-check-99412 upstream_status: -
+
+# Hop 2: Nginx Reverse Proxy (/var/log/nginx/access.log)
+[28/Oct/2026:14:30:00.005 +0000] "POST /checkout HTTP/1.1" 499 5.200 req-check-99412 upstream_response_time: 5.195
+
+# Hop 3: Tomcat Payment Engine (/opt/tomcat/logs/catalina.out)
+[28/Oct/2026:14:30:05.180 +0000] [req-check-99412] PaymentGateway SUCCESS transaction_id: TXN-884129 amount: 149.99 HTTP 200 OK

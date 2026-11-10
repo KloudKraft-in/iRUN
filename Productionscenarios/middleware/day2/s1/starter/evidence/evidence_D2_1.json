@@ -1,0 +1,14 @@
+{
+  "ticket": "MIA-D2-201",
+  "participant": "<<FILL_YOUR_NAME>>",
+  "poisonPillsIdentified": "<<FILL_COUNT>>",
+  "legitimateOrdersRecovered": "<<FILL_COUNT>>",
+  "defensiveValidationCriteria": {
+    "requiredFields": [
+      "<<FILL_FIELD_1>>",
+      "<<FILL_FIELD_2>>"
+    ],
+    "minimumAmount": "<<FILL_CONDITION>>"
+  },
+  "rootCause": "<<FILL_ROOT_CAUSE_EXPLANATION>>"
+}
