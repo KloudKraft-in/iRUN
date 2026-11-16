@@ -1,0 +1,4 @@
+// Fetch error logs across services
+fetch logs, from:now()-2h
+| filter status == "ERROR"
+// TODO: summarize ErrorCount by service and error.type

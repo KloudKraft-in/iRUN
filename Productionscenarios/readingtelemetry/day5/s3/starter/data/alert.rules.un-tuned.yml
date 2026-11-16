@@ -1,0 +1,5 @@
+groups:
+  - name: untuned
+    rules:
+      - alert: HostHighCPUSustained
+        expr: node_cpu_seconds_total > 85

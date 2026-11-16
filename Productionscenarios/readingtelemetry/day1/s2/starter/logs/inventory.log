@@ -1,0 +1,1 @@
+2026-11-12T05:44:51Z ERROR [inventory-service] [trace_id=4bf92f3577b34da6a3ce929d0e0e4736, span_id=6dfaa2be6b9cec02] StockReservationException: SKU PROD-7729 warehouse bin locked due to cycle count audit

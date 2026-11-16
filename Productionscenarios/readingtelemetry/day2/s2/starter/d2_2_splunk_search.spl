@@ -1,0 +1,2 @@
+index=retail_prod host=prod-worker-02 sourcetype="checkout:json" "TXN-88129-CORR"
+| table _time, host, service, error_code, error_msg, transaction_id

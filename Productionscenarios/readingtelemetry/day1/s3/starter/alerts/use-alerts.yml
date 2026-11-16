@@ -1,0 +1,7 @@
+groups:
+  - name: use-alerts
+    rules:
+      - alert: DatabaseQueueSaturation
+        expr: pg_stat_database_disk_queue_depth > 30
+      - alert: DiskIOWaitHigh
+        expr: node_disk_io_time_weighted_seconds_total > 250

@@ -1,0 +1,5 @@
+scrape_configs:
+  - job_name: "shopnow-services"
+    static_configs:
+      - targets: ["shopnow-api:8080"]
+    # TODO: Add metric_relabel_configs to drop user_id

@@ -1,0 +1,1 @@
+{"name": "Checkout Latency Monitor", "query": "avg(last_5m):avg:shopnow.checkout.duration{env:staging} > 2.0"}

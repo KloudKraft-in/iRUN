@@ -1,0 +1,18 @@
+{
+  "ticket": "TEL-D4-403",
+  "participant": "<<FILL_YOUR_NAME>>",
+  "date": "<<FILL_TIMESTAMP>>",
+  "courseOutcome": "CO-12",
+  "incidentSummary": {
+    "observedDefect": "<<FILL_OBSERVED_DEFECT_EXPLANATION>>",
+    "rootCauseComponent": "<<FILL_ROOT_CAUSE_COMPONENT>>"
+  },
+  "telemetryFixes": {
+    "primaryQueryOrFix": "<<FILL_YOUR_FIXED_QUERY_HERE>>",
+    "secondaryQueryOrThreshold": "<<FILL_SECONDARY_METRIC_OR_RULE>>"
+  },
+  "verification": {
+    "verifiedOnPlatform": "<<FILL_TRUE_OR_FALSE>>",
+    "mitigationRecommendation": "<<FILL_REMEDIATION_ACTION>>"
+  }
+}
